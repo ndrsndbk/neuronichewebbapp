@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Neuro Niche – Neurodiversity in Schools Fundamentals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --sage: #DDE6D5;
+      --teal: #2E7D7C;
+      --sand: #F3EEE6;
+      --ink: #0F172A;
+      --radius-xl: 18px;
+      --radius-lg: 12px;
+      --transition-fast: 0.25s ease;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--sand);
+      color: var(--ink);
+      display: flex;
+      justify-content: center;
+    }
+    .app-shell {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      padding: 16px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background-color: var(--sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .brand-title {
+      font-weight: 600;
+      font-size: 18px;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: rgba(15,23,42,0.6);
+    }
+    .progress-wrap {
+      margin-top: 4px;
+      width: 100%;
+      background: rgba(0,0,0,0.06);
+      border-radius: 999px;
+      height: 7px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--teal);
+      border-radius: 999px;
+      transition: width var(--transition-fast);
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 16px 14px 14px;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+      margin-top: 10px;
+    }
+    h1, h2 { margin: 0 0 6px; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 18px; }
+    p {
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+    }
+    label {
+      font-size: 13px;
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(15,23,42,0.14);
+      font-size: 14px;
+      outline: none;
+      background-color: #fff;
+    }
+    input[type="radio"],
+    input[type="checkbox"] {
+      margin-right: 6px;
+    }
+    .options {
+      display: grid;
+      gap: 6px;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+    .helper {
+      font-size: 11px;
+      color: rgba(15,23,42,0.6);
+      margin-top: 2px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      background: rgba(46,125,124,0.06);
+      color: var(--teal);
+      margin-bottom: 2px;
+    }
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 9px 14px;
+      border-radius: var(--radius-lg);
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .btn-primary {
+      background-color: var(--teal);
+      color: #ffffff;
+      flex: 1;
+      box-shadow: 0 4px 12px rgba(46,125,124,0.18);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(46,125,124,0.26);
+    }
+    .btn-ghost {
+      background-color: #ffffff;
+      color: var(--ink);
+      border: 1px solid rgba(15,23,42,0.18);
+      flex-basis: 88px;
+    }
+    .status {
+      font-size: 11px;
+      margin-top: 2px;
+    }
+    .status.warn { color: #b45309; }
+    .status.ok { color: #15803d; }
+    .result-score {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 4px 0;
+    }
+    .small-label {
+      font-size: 11px;
+      color: rgba(15,23,42,0.6);
+      margin-top: 4px;
+    }
+    a.share-link {
+      font-size: 12px;
+      color: var(--teal);
+      text-decoration: underline;
+      word-break: break-all;
+    }
+    .match-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 6px;
+      align-items: center;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+  <header>
+    <div class="logo">🧠</div>
+    <div>
+      <!-- EDIT HERE: site/brand name -->
+      <div class="brand-title">Neuro Niche</div>
+      <!-- EDIT HERE: mini-lesson label -->
+      <div class="brand-sub">Neurodiversity in Schools — Fundamentals</div>
+    </div>
+  </header>
+
+  <div class="progress-wrap">
+    <div id="progressBar" class="progress-bar"></div>
+  </div>
+
+  <div id="card" class="card"></div>
+</div>
+
+<script>
+  // --- CONFIG ---
+  // 0: intro (name + email)
+  // 1: MCQ – definition
+  // 2: Select all that apply – myths
+  // 3: Select incorrect – non-inclusive
+  // 4: Matching – concepts to descriptions
+  // 5: Results
+  const QUESTION_STEPS = 4;
+
+  // OPTIONAL: paste your Google Apps Script Web App URL below to log completions to Google Sheets.
+  // See instructions in comments further down.
+  const LOG_ENDPOINT = ""; // e.g. "https://script.google.com/macros/s/XXXXX/exec"
+
+  let state = {
+    step: 0,
+    name: "",
+    email: "",
+    answers: {},
+    logged: false
+  };
+
+  const card = document.getElementById("card");
+  const progressBar = document.getElementById("progressBar");
+
+  function updateProgress() {
+    if (state.step === 0) {
+      progressBar.style.width = "0%";
+    } else if (state.step >= 1 && state.step <= QUESTION_STEPS) {
+      const pct = (state.step / QUESTION_STEPS) * 100;
+      progressBar.style.width = pct + "%";
+    } else if (state.step === 5) {
+      progressBar.style.width = "100%";
+    }
+  }
+
+  function el(tag, attrs = {}, children = []) {
+    const node = document.createElement(tag);
+    Object.entries(attrs).forEach(([k, v]) => {
+      if (k === "class") node.className = v;
+      else if (k === "for") node.htmlFor = v;
+      else if (k === "html") node.innerHTML = v;
+      else node.setAttribute(k, v);
+    });
+    (Array.isArray(children) ? children : [children]).forEach(c => {
+      if (c == null) return;
+      if (typeof c === "string") node.appendChild(document.createTextNode(c));
+      else node.appendChild(c);
+    });
+    return node;
+  }
+
+  function render() {
+    card.innerHTML = "";
+    updateProgress();
+
+    switch (state.step) {
+      case 0: return renderIntro();
+      case 1: return renderQ1();
+      case 2: return renderQ2();
+      case 3: return renderQ3();
+      case 4: return renderQ4();
+      case 5: return renderResults();
+    }
+  }
+
+  // --- Screen 0: Intro (Name + Email) ---
+  function renderIntro() {
+    card.appendChild(el("div", {class:"pill"}, "Mini lesson · ~5 minutes"));
+    // EDIT HERE: intro heading
+    card.appendChild(el("h1", {}, "Welcome to the mini lesson"));
+    // EDIT HERE: intro copy
+    card.appendChild(el("p", {},
+      "This short lesson introduces key ideas about neurodiversity and neuro-inclusive practice in schools."
+    ));
+
+    const nameLabel = el("label", {for:"name"}, "Your full name");
+    const nameInput = el("input", {
+      id:"name",
+      type:"text",
+      placeholder:"e.g., Sam Teacher",
+      value: state.name
+    });
+    nameInput.addEventListener("input", e => { state.name = e.target.value; });
+
+    const emailLabel = el("label", {for:"email"}, "Your email (for certificate / school log)");
+    const emailInput = el("input", {
+      id:"email",
+      type:"email",
+      placeholder:"you@school.org",
+      value: state.email
+    });
+    emailInput.addEventListener("input", e => { state.email = e.target.value; });
+
+    card.appendChild(nameLabel);
+    card.appendChild(nameInput);
+    card.appendChild(emailLabel);
+    card.appendChild(emailInput);
+    card.appendChild(el("div", {class:"helper"},
+      "Use your school email if you’d like your completion to be recognised."
+    ));
+
+    const status = el("div", {class:"status"}, "");
+    card.appendChild(status);
+
+    const btnRow = el("div", {class:"btn-row"});
+    const startBtn = el("button", {class:"btn-primary"}, "Start lesson");
+    startBtn.onclick = () => {
+      if (!state.name || !state.email) {
+        status.textContent = "Please enter your name and email to begin.";
+        status.className = "status warn";
+        return;
+      }
+      status.textContent = "";
+      state.step = 1;
+      render();
+    };
+    btnRow.appendChild(startBtn);
+    card.appendChild(btnRow);
+  }
+
+  // --- Q1: Multiple Choice ---
+  function renderQ1() {
+    card.appendChild(el("div", {class:"pill"}, "Question 1 of 4 · Multiple choice"));
+    // EDIT HERE: Q1 stem
+    card.appendChild(el("h2", {}, "What does neurodiversity mean?"));
+    card.appendChild(el("p", {}, "Choose the most accurate definition."));
+
+    const opts = [
+      "A medical disorder affecting a small number of people.",
+      "The natural variation in human brains and minds across the population.",
+      "A trend about productivity and self-optimization."
+    ];
+
+    const wrap = el("div", {class:"options"});
+    const current = state.answers.q1 || "";
+    opts.forEach((opt, i) => {
+      const id = "q1_" + i;
+      const input = el("input", {
+        type:"radio",
+        name:"q1",
+        id,
+        value:opt
+      });
+      if (current === opt) input.checked = true;
+      input.addEventListener("change", () => { state.answers.q1 = opt; });
+      const lbl = el("label", {for:id}, opt);
+      wrap.appendChild(el("div", {}, [input, lbl]));
+    });
+    card.appendChild(wrap);
+
+    const status = el("div", {class:"status"}, "");
+    card.appendChild(status);
+
+    const btnRow = el("div", {class:"btn-row"});
+    const back = el("button", {class:"btn-ghost"}, "Back");
+    back.onclick = () => { state.step = 0; render(); };
+    const next = el("button", {class:"btn-primary"}, "Next");
+    next.onclick = () => {
+      if (!state.answers.q1) {
+        status.textContent = "Please choose an answer.";
+        status.className = "status warn";
+        return;
+      }
+      state.step = 2;
+      render();
+    };
+    btnRow.appendChild(back);
+    btnRow.appendChild(next);
+    card.appendChild(btnRow);
+  }
+
+  // --- Q2: Select all that apply (myths) ---
+  function renderQ2() {
+    card.appendChild(el("div", {class:"pill"}, "Question 2 of 4 · Select all that apply"));
+    card.appendChild(el("h2", {}, "Which of the following are stereotypes or myths?"));
+    card.appendChild(el("p", {},
+      "Tick every statement that reflects a harmful or incorrect assumption."
+    ));
+
+    const opts = [
+      "All neurodivergent students have the same needs.",
+      "Neurodiversity is caused by poor parenting.",
+      "You can reliably 'see' neurodiversity just by looking at someone.",
+      "With the right supports and environment, many students can thrive."
+    ];
+
+    const selected = new Set(state.answers.q2 || []);
+    const wrap = el("div", {class:"options"});
+    opts.forEach((opt, i) => {
+      const id = "q2_" + i;
+      const input = el("input", {
+        type:"checkbox",
+        id,
+        value:opt
+      });
+      if (selected.has(opt)) input.checked = true;
+      input.addEventListener("change", () => {
+        if (input.checked) selected.add(opt); else selected.delete(opt);
+        state.answers.q2 = Array.from(selected);
+      });
+      const lbl = el("label", {for:id}, opt);
+      wrap.appendChild(el("div", {}, [input, lbl]));
+    });
+    card.appendChild(wrap);
+
+    card.appendChild(el("div", {class:"helper"},
+      "Hint: Look for generalisations, blame, or over-simplification."
+    ));
+
+    const status = el("div", {class:"status"}, "");
+    card.appendChild(status);
+
+    const btnRow = el("div", {class:"btn-row"});
+    const back = el("button", {class:"btn-ghost"}, "Back");
+    back.onclick = () => { state.step = 1; render(); };
+    const next = el("button", {class:"btn-primary"}, "Next");
+    next.onclick = () => {
+      const answers = state.answers.q2 || [];
+      if (answers.length === 0) {
+        status.textContent = "Select at least one option.";
+        status.className = "status warn";
+        return;
+      }
+      state.step = 3;
+      render();
+    };
+    btnRow.appendChild(back);
+    btnRow.appendChild(next);
+    card.appendChild(btnRow);
+  }
+
+  // --- Q3: Select the incorrect answer (non-inclusive) ---
+  function renderQ3() {
+    card.appendChild(el("div", {class:"pill"}, "Question 3 of 4 · Select the incorrect answer"));
+    card.appendChild(el("h2", {}, "Which statement does NOT describe neuro-inclusive practice?"));
+    card.appendChild(el("p", {},
+      "Choose the option that conflicts with a neurodiversity-affirming approach."
+    ));
+
+    const opts = [
+      "Designing environments so that different sensory and learning profiles can succeed.",
+      "Only supporting students after they 'fail' to cope with rigid expectations.",
+      "Offering multiple ways to participate, communicate, and show understanding."
+    ];
+
+    const current = state.answers.q3 || "";
+    const wrap = el("div", {class:"options"});
+    opts.forEach((opt, i) => {
+      const id = "q3_" + i;
+      const input = el("input", {
+        type:"radio",
+        name:"q3",
+        id,
+        value:opt
+      });
+      if (current === opt) input.checked = true;
+      input.addEventListener("change", () => { state.answers.q3 = opt; });
+      const lbl = el("label", {for:id}, opt);
+      wrap.appendChild(el("div", {}, [input, lbl]));
+    });
+    card.appendChild(wrap);
+
+    const status = el("div", {class:"status"}, "");
+    card.appendChild(status);
+
+    const btnRow = el("div", {class:"btn-row"});
+    const back = el("button", {class:"btn-ghost"}, "Back");
+    back.onclick = () => { state.step = 2; render(); };
+    const next = el("button", {class:"btn-primary"}, "Next");
+    next.onclick = () => {
+      if (!state.answers.q3) {
+        status.textContent = "Please choose one answer.";
+        status.className = "status warn";
+        return;
+      }
+      state.step = 4;
+      render();
+    };
+    btnRow.appendChild(back);
+    btnRow.appendChild(next);
+    card.appendChild(btnRow);
+  }
+
+  // --- Q4: Matching concepts to phrases ---
+  function renderQ4() {
+    card.appendChild(el("div", {class:"pill"}, "Question 4 of 4 · Matching"));
+    card.appendChild(el("h2", {}, "Match each concept to the best description"));
+    card.appendChild(el("p", {},
+      "Use the dropdowns to connect the idea with the most accurate phrase."
+    ));
+
+    const options = [
+      "Recognising natural brain/mind diversity across humans.",
+      "An individual whose brain processes diverge from dominant expectations.",
+      "Designing environments that expect variation and reduce barriers."
+    ];
+
+    const current = state.answers.q4 || {};
+    const rows = [
+      { key: "neurodiversity", label: "Neurodiversity" },
+      { key: "neurodivergent", label: "Neurodivergent" },
+      { key: "neuroinclusive", label: "Neuro-inclusive practice" }
+    ];
+
+    rows.forEach(row => {
+      const sel = el("select", {});
+      sel.appendChild(el("option", {value:""}, "-- Select a description --"));
+      options.forEach(opt => {
+        const o = el("option", {value:opt}, opt);
+        if (current[row.key] === opt) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.addEventListener("change", e => {
+        if (!state.answers.q4) state.answers.q4 = {};
+        state.answers.q4[row.key] = e.target.value;
+      });
+
+      const r = el("div", {class:"match-row"}, [
+        el("div", {}, row.label),
+        sel
+      ]);
+      card.appendChild(r);
+    });
+
+    const status = el("div", {class:"status"}, "");
+    card.appendChild(status);
+
+    const btnRow = el("div", {class:"btn-row"});
+    const back = el("button", {class:"btn-ghost"}, "Back");
+    back.onclick = () => { state.step = 3; render(); };
+    const finish = el("button", {class:"btn-primary"}, "See my results");
+    finish.onclick = () => {
+      const q4 = state.answers.q4 || {};
+      if (!q4.neurodiversity || !q4.neurodivergent || !q4.neuroinclusive) {
+        status.textContent = "Please complete all three matches.";
+        status.className = "status warn";
+        return;
+      }
+      calculateScore();
+      state.step = 5;
+      render();
+    };
+    btnRow.appendChild(back);
+    btnRow.appendChild(finish);
+    card.appendChild(btnRow);
+  }
+
+  function calculateScore() {
+    let score = 0;
+
+    // Q1 correct
+    if (state.answers.q1 === "The natural variation in human brains and minds across the population.") {
+      score++;
+    }
+
+    // Q2 correct set
+    const correctMyths = new Set([
+      "All neurodivergent students have the same needs.",
+      "Neurodiversity is caused by poor parenting.",
+      "You can reliably 'see' neurodiversity just by looking at someone."
+    ]);
+    const chosen = new Set(state.answers.q2 || []);
+    const allCorrectChosen = [...correctMyths].every(m => chosen.has(m));
+    const noExtra = [...chosen].every(m => correctMyths.has(m));
+    if (allCorrectChosen && noExtra) {
+      score++;
+    }
+
+    // Q3: incorrect statement is the non-inclusive one
+    if (state.answers.q3 === "Only supporting students after they 'fail' to cope with rigid expectations.") {
+      score++;
+    }
+
+    // Q4: matching
+    const q4 = state.answers.q4 || {};
+    const c1 = q4.neurodiversity === "Recognising natural brain/mind diversity across humans.";
+    const c2 = q4.neurodivergent === "An individual whose brain processes diverge from dominant expectations.";
+    const c3 = q4.neuroinclusive === "Designing environments that expect variation and reduce barriers.";
+    if (c1 && c2 && c3) {
+      score++;
+    }
+
+    state.answers.score = score;
+    if (!state.logged) {
+      logCompletion(score);
+    }
+  }
+
+  // --- Google Sheets logging via Apps Script ---
+  function logCompletion(score) {
+    if (!LOG_ENDPOINT) return; // If you haven't set this, skip logging.
+
+    const payload = {
+      name: state.name,
+      email: state.email,
+      score: score,
+      completed_at: new Date().toISOString()
+    };
+
+    fetch(LOG_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(err => {
+      console.error("Log error", err);
+    });
+
+    state.logged = true;
+  }
+
+  // --- Screen 5: Results ---
+  function renderResults() {
+    const score = state.answers.score || 0;
+    const name = state.name || "there";
+
+    card.appendChild(el("div", {class:"pill"}, "Completed"));
+    card.appendChild(el("h2", {}, `Well done, ${name}!`));
+    card.appendChild(el("p", {},
+      "You’ve completed the Neurodiversity in Schools — Fundamentals quiz."
+    ));
+    card.appendChild(el("div", {class:"result-score"}, `${score} / 4`));
+
+    let msg;
+    if (score === 4) {
+      msg = "You’re demonstrating a strong, affirming understanding of core concepts.";
+    } else if (score === 3) {
+      msg = "Great foundations. A quick revisit of any missed items will deepen your confidence.";
+    } else {
+      msg = "This is a starting point. Consider revisiting the questions and reflecting with your team.";
+    }
+    card.appendChild(el("p", {}, msg));
+
+    card.appendChild(el("p", {class:"small-label"},
+      "Schools can connect this mini lesson to a Google Sheet or database"
+    ));
+
+    const appUrl = encodeURIComponent(window.location.href.split("#")[0]);
+    const shareText = encodeURIComponent(
+      "I just completed the Neurodiversity in Schools – Fundamentals mini lesson with Neuro Niche. " +
+      "#Neurodiversity #NeuroInclusive #UDL"
+    );
+    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${appUrl}&summary=${shareText}`;
+
+    card.appendChild(el("p", {class:"small-label"}, "Optional: share your learning"));
+    card.appendChild(el("a", {
+      class:"share-link",
+      href: linkedinUrl,
+      target:"_blank",
+      rel:"noopener noreferrer"
+    }, "Share on LinkedIn"));
+
+    const btnRow = el("div", {class:"btn-row"});
+    const restart = el("button", {class:"btn-primary"}, "Restart lesson");
+    restart.onclick = () => {
+      state.step = 0;
+      state.answers = {};
+      state.logged = false;
+      render();
+    };
+    btnRow.appendChild(restart);
+    card.appendChild(btnRow);
+  }
+
+  // --- HOW TO HOOK UP GOOGLE SHEETS (summary in comments) ---
+  // 1. Create a new Google Sheet (e.g., "Neuro Niche Completions").
+  // 2. Extensions → Apps Script. Replace the default code with:
+  //
+  //    function doPost(e) {
+  //      const ss = SpreadsheetApp.getActiveSpreadsheet();
+  //      const sheet = ss.getSheetByName('Completions') || ss.insertSheet('Completions');
+  //      const data = JSON.parse(e.postData.contents || '{}');
+  //      sheet.appendRow([
+  //        new Date(),
+  //        data.name || '',
+  //        data.email || '',
+  //        data.score || '',
+  //        data.completed_at || ''
+  //      ]);
+  //      return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
+  //    }
+  //
+  // 3. Deploy → New deployment → type "Web app":
+  //      - Execute as: Me
+  //      - Who has access: Anyone with the link
+  //    Copy the Web app URL.
+  // 4. Paste that URL into the LOG_ENDPOINT constant at the top of this script.
+  // 5. When users finish the quiz, their name/email/score will be logged to the sheet.
+
+  // Initial render
+  render();
+</script>
+</body>
+</html>
