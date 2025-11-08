@@ -97,8 +97,7 @@
     }
     input[type="text"],
     input[type="email"],
-    select,
-    textarea {
+    select {
       width: 100%;
       padding: 9px 10px;
       border-radius: var(--radius-lg);
@@ -106,11 +105,6 @@
       font-size: 14px;
       outline: none;
       background-color: #fff;
-      font-family: inherit;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 80px;
     }
     input[type="radio"],
     input[type="checkbox"] {
@@ -225,19 +219,17 @@
 
 <script>
   // --- CONFIG ---
-  // Steps:
-  // 0: Intro (name + email)
+  // 0: intro (name + email)
   // 1: MCQ – definition
   // 2: Select all that apply – myths
   // 3: Select incorrect – non-inclusive
   // 4: Matching – concepts to descriptions
   // 5: Results
-  // 6: Contact form
   const QUESTION_STEPS = 4;
 
-  // Your deployed Google Apps Script Web App URL (already set up).
-  // This single endpoint will handle both completions and contact requests.
-  const LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyQXDmkIK7_R9xwk5sUMTmr_gEyBSZnNYzBFCLS0EhbZ8-wGZFotg0JT0f6jCvBlhIVaw/exec";
+  // OPTIONAL: paste your Google Apps Script Web App URL below to log completions to Google Sheets.
+  // See instructions in comments further down.
+  const LOG_ENDPOINT = ""; // e.g. "https://script.google.com/macros/s/XXXXX/exec"
 
   let state = {
     step: 0,
@@ -256,8 +248,7 @@
     } else if (state.step >= 1 && state.step <= QUESTION_STEPS) {
       const pct = (state.step / QUESTION_STEPS) * 100;
       progressBar.style.width = pct + "%";
-    } else {
-      // Results + Contact = full progress
+    } else if (state.step === 5) {
       progressBar.style.width = "100%";
     }
   }
@@ -289,14 +280,15 @@
       case 3: return renderQ3();
       case 4: return renderQ4();
       case 5: return renderResults();
-      case 6: return renderContact();
     }
   }
 
   // --- Screen 0: Intro (Name + Email) ---
   function renderIntro() {
     card.appendChild(el("div", {class:"pill"}, "Mini lesson · ~5 minutes"));
+    // EDIT HERE: intro heading
     card.appendChild(el("h1", {}, "Welcome to the mini lesson"));
+    // EDIT HERE: intro copy
     card.appendChild(el("p", {},
       "This short lesson introduces key ideas about neurodiversity and neuro-inclusive practice in schools."
     ));
@@ -349,6 +341,7 @@
   // --- Q1: Multiple Choice ---
   function renderQ1() {
     card.appendChild(el("div", {class:"pill"}, "Question 1 of 4 · Multiple choice"));
+    // EDIT HERE: Q1 stem
     card.appendChild(el("h2", {}, "What does neurodiversity mean?"));
     card.appendChild(el("p", {}, "Choose the most accurate definition."));
 
@@ -613,12 +606,11 @@
     }
   }
 
-  // --- Google Sheets logging: completions ---
+  // --- Google Sheets logging via Apps Script ---
   function logCompletion(score) {
-    if (!LOG_ENDPOINT) return;
+    if (!LOG_ENDPOINT) return; // If you haven't set this, skip logging.
 
     const payload = {
-      type: "completion",
       name: state.name,
       email: state.email,
       score: score,
@@ -636,7 +628,7 @@
     state.logged = true;
   }
 
-  // --- Screen 5: Results + CTA ---
+  // --- Screen 5: Results ---
   function renderResults() {
     const score = state.answers.score || 0;
     const name = state.name || "there";
@@ -658,10 +650,8 @@
     }
     card.appendChild(el("p", {}, msg));
 
-    // CTA copy
     card.appendChild(el("p", {class:"small-label"},
-      "Are you an educator needing help designing environments that enable all to thrive? " +
-      "Are you a parent or student needing support?"
+      "Schools can connect this mini lesson to a Google Sheet or database"
     ));
 
     const appUrl = encodeURIComponent(window.location.href.split("#")[0]);
@@ -680,162 +670,41 @@
     }, "Share on LinkedIn"));
 
     const btnRow = el("div", {class:"btn-row"});
-
-    // Contact button → goes to contact form step
-    const contactBtn = el("button", {class:"btn-primary"}, "Contact Neuro Niche");
-    contactBtn.onclick = () => {
-      state.step = 6;
-      render();
-    };
-
-    // Restart as secondary
-    const restart = el("button", {class:"btn-ghost"}, "Restart lesson");
+    const restart = el("button", {class:"btn-primary"}, "Restart lesson");
     restart.onclick = () => {
       state.step = 0;
       state.answers = {};
       state.logged = false;
       render();
     };
-
-    btnRow.appendChild(contactBtn);
     btnRow.appendChild(restart);
     card.appendChild(btnRow);
   }
 
-  // --- Screen 6: Contact form ---
-  function renderContact() {
-    card.appendChild(el("div", {class:"pill"}, "Next step"));
-    card.appendChild(el("h2", {}, "How can Neuro Niche support you?"));
-    card.appendChild(el("p", {}, 
-      "Share a few details and we’ll follow up with resources or a time to connect."
-    ));
-
-    const nameLabel = el("label", {for:"c_name"}, "Name");
-    const nameInput = el("input", {
-      id:"c_name",
-      type:"text",
-      placeholder:"Your name",
-      value: state.name
-    });
-
-    const emailLabel = el("label", {for:"c_email"}, "Email");
-    const emailInput = el("input", {
-      id:"c_email",
-      type:"email",
-      placeholder:"you@school.org",
-      value: state.email
-    });
-
-    const descLabel = el("label", {for:"c_msg"}, "Short description of how Neuro Niche can help you");
-    const descInput = el("textarea", {
-      id:"c_msg",
-      placeholder:"E.g., \"We’d like support designing a sensory-friendly classroom\" or \"Support for my autistic learner\""
-    });
-
-    card.appendChild(nameLabel);
-    card.appendChild(nameInput);
-    card.appendChild(emailLabel);
-    card.appendChild(emailInput);
-    card.appendChild(descLabel);
-    card.appendChild(descInput);
-
-    const status = el("div", {class:"status"}, "");
-    card.appendChild(status);
-
-    const btnRow = el("div", {class:"btn-row"});
-
-    const back = el("button", {class:"btn-ghost"}, "Back");
-    back.onclick = () => {
-      state.step = 5;
-      render();
-    };
-
-    const submit = el("button", {class:"btn-primary"}, "Send message");
-    submit.onclick = () => {
-      const n = nameInput.value.trim();
-      const e = emailInput.value.trim();
-      const m = descInput.value.trim();
-
-      if (!n || !e || !m) {
-        status.textContent = "Please fill in all fields before submitting.";
-        status.className = "status warn";
-        return;
-      }
-
-      // Fire-and-forget log
-      logContact({
-        name: n,
-        email: e,
-        message: m
-      });
-
-      status.textContent = "Thank you. Your message has been sent.";
-      status.className = "status ok";
-
-      // Optionally keep values or clear:
-      // descInput.value = "";
-    };
-
-    btnRow.appendChild(back);
-    btnRow.appendChild(submit);
-    card.appendChild(btnRow);
-  }
-
-  // --- Google Sheets logging: contact requests (separate tab) ---
-  function logContact(data) {
-    if (!LOG_ENDPOINT) return;
-
-    const payload = {
-      type: "contact",
-      name: data.name,
-      email: data.email,
-      message: data.message,
-      submitted_at: new Date().toISOString()
-    };
-
-    fetch(LOG_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    }).catch(err => {
-      console.error("Contact log error", err);
-    });
-  }
-
-  // --- Apps Script NOTE (for your existing endpoint) ---
-  // Update your doPost(e) in Apps Script to handle both 'completion' and 'contact':
+  // --- HOW TO HOOK UP GOOGLE SHEETS (summary in comments) ---
+  // 1. Create a new Google Sheet (e.g., "Neuro Niche Completions").
+  // 2. Extensions → Apps Script. Replace the default code with:
   //
-  // function doPost(e) {
-  //   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  //   const data = JSON.parse(e.postData.contents || '{}');
-  //   const type = data.type || 'completion';
+  //    function doPost(e) {
+  //      const ss = SpreadsheetApp.getActiveSpreadsheet();
+  //      const sheet = ss.getSheetByName('Completions') || ss.insertSheet('Completions');
+  //      const data = JSON.parse(e.postData.contents || '{}');
+  //      sheet.appendRow([
+  //        new Date(),
+  //        data.name || '',
+  //        data.email || '',
+  //        data.score || '',
+  //        data.completed_at || ''
+  //      ]);
+  //      return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
+  //    }
   //
-  //   if (type === 'contact') {
-  //     const sheet = ss.getSheetByName('ContactRequests') || ss.insertSheet('ContactRequests');
-  //     sheet.appendRow([
-  //       new Date(),
-  //       data.name || '',
-  //       data.email || '',
-  //       data.message || '',
-  //       data.submitted_at || ''
-  //     ]);
-  //   } else {
-  //     const sheet = ss.getSheetByName('Completions') || ss.insertSheet('Completions');
-  //     sheet.appendRow([
-  //       new Date(),
-  //       data.name || '',
-  //       data.email || '',
-  //       data.score || '',
-  //       data.completed_at || ''
-  //     ]);
-  //   }
-  //
-  //   return ContentService
-  //     .createTextOutput('OK')
-  //     .setMimeType(ContentService.MimeType.TEXT);
-  // }
-  //
-  // This keeps everything in one endpoint, two tabs: `Completions` and `ContactRequests`.
+  // 3. Deploy → New deployment → type "Web app":
+  //      - Execute as: Me
+  //      - Who has access: Anyone with the link
+  //    Copy the Web app URL.
+  // 4. Paste that URL into the LOG_ENDPOINT constant at the top of this script.
+  // 5. When users finish the quiz, their name/email/score will be logged to the sheet.
 
   // Initial render
   render();
