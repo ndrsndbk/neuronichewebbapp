@@ -7,7 +7,7 @@
   <style>
     :root {
       --sage: #DDE6D5;
-      --teal: #2E7D7C;
+      --teal: #2E7D7C; /* brand green/teal */
       --sand: #F3EEE6;
       --ink: #0F172A;
       --radius-xl: 18px;
@@ -97,7 +97,8 @@
     }
     input[type="text"],
     input[type="email"],
-    select {
+    select,
+    textarea {
       width: 100%;
       padding: 9px 10px;
       border-radius: var(--radius-lg);
@@ -105,6 +106,11 @@
       font-size: 14px;
       outline: none;
       background-color: #fff;
+      font-family: inherit;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
     }
     input[type="radio"],
     input[type="checkbox"] {
@@ -196,6 +202,12 @@
       align-items: center;
       font-size: 12px;
     }
+    .cta {
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal); /* standout green */
+    }
   </style>
 </head>
 <body>
@@ -219,17 +231,19 @@
 
 <script>
   // --- CONFIG ---
-  // 0: intro (name + email)
+  // Steps:
+  // 0: Intro (name + email)
   // 1: MCQ – definition
   // 2: Select all that apply – myths
   // 3: Select incorrect – non-inclusive
   // 4: Matching – concepts to descriptions
-  // 5: Results
+  // 5: Results (+ CTA)
+  // 6: Contact form
   const QUESTION_STEPS = 4;
 
-  // OPTIONAL: paste your Google Apps Script Web App URL below to log completions to Google Sheets.
-  // See instructions in comments further down.
-  const LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyQXDmkIK7_R9xwk5sUMTmr_gEyBSZnNYzBFCLS0EhbZ8-wGZFotg0JT0f6jCvBlhIVaw/exec"; // e.g. "https://script.google.com/macros/s/XXXXX/exec"
+  // Use your deployed Apps Script Web App URL here
+  // (the same one you already created for logging).
+  const LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyQXDmkIK7_R9xwk5sUMTmr_gEyBSZnNYzBFCLS0EhbZ8-wGZFotg0JT0f6jCvBlhIVaw/exec";
 
   let state = {
     step: 0,
@@ -248,7 +262,8 @@
     } else if (state.step >= 1 && state.step <= QUESTION_STEPS) {
       const pct = (state.step / QUESTION_STEPS) * 100;
       progressBar.style.width = pct + "%";
-    } else if (state.step === 5) {
+    } else {
+      // Results + contact = 100%
       progressBar.style.width = "100%";
     }
   }
@@ -280,15 +295,14 @@
       case 3: return renderQ3();
       case 4: return renderQ4();
       case 5: return renderResults();
+      case 6: return renderContact();
     }
   }
 
-  // --- Screen 0: Intro (Name + Email) ---
+  // --- Screen 0: Intro ---
   function renderIntro() {
     card.appendChild(el("div", {class:"pill"}, "Mini lesson · ~5 minutes"));
-    // EDIT HERE: intro heading
     card.appendChild(el("h1", {}, "Welcome to the mini lesson"));
-    // EDIT HERE: intro copy
     card.appendChild(el("p", {},
       "This short lesson introduces key ideas about neurodiversity and neuro-inclusive practice in schools."
     ));
@@ -338,10 +352,9 @@
     card.appendChild(btnRow);
   }
 
-  // --- Q1: Multiple Choice ---
+  // --- Q1: Multiple choice ---
   function renderQ1() {
     card.appendChild(el("div", {class:"pill"}, "Question 1 of 4 · Multiple choice"));
-    // EDIT HERE: Q1 stem
     card.appendChild(el("h2", {}, "What does neurodiversity mean?"));
     card.appendChild(el("p", {}, "Choose the most accurate definition."));
 
@@ -359,7 +372,7 @@
         type:"radio",
         name:"q1",
         id,
-        value:opt
+        value: opt
       });
       if (current === opt) input.checked = true;
       input.addEventListener("change", () => { state.answers.q1 = opt; });
@@ -389,7 +402,7 @@
     card.appendChild(btnRow);
   }
 
-  // --- Q2: Select all that apply (myths) ---
+  // --- Q2: Select all that apply ---
   function renderQ2() {
     card.appendChild(el("div", {class:"pill"}, "Question 2 of 4 · Select all that apply"));
     card.appendChild(el("h2", {}, "Which of the following are stereotypes or myths?"));
@@ -408,14 +421,11 @@
     const wrap = el("div", {class:"options"});
     opts.forEach((opt, i) => {
       const id = "q2_" + i;
-      const input = el("input", {
-        type:"checkbox",
-        id,
-        value:opt
-      });
+      const input = el("input", { type:"checkbox", id, value: opt });
       if (selected.has(opt)) input.checked = true;
       input.addEventListener("change", () => {
-        if (input.checked) selected.add(opt); else selected.delete(opt);
+        if (input.checked) selected.add(opt);
+        else selected.delete(opt);
         state.answers.q2 = Array.from(selected);
       });
       const lbl = el("label", {for:id}, opt);
@@ -449,7 +459,7 @@
     card.appendChild(btnRow);
   }
 
-  // --- Q3: Select the incorrect answer (non-inclusive) ---
+  // --- Q3: Select the incorrect answer ---
   function renderQ3() {
     card.appendChild(el("div", {class:"pill"}, "Question 3 of 4 · Select the incorrect answer"));
     card.appendChild(el("h2", {}, "Which statement does NOT describe neuro-inclusive practice?"));
@@ -471,7 +481,7 @@
         type:"radio",
         name:"q3",
         id,
-        value:opt
+        value: opt
       });
       if (current === opt) input.checked = true;
       input.addEventListener("change", () => { state.answers.q3 = opt; });
@@ -501,7 +511,7 @@
     card.appendChild(btnRow);
   }
 
-  // --- Q4: Matching concepts to phrases ---
+  // --- Q4: Matching ---
   function renderQ4() {
     card.appendChild(el("div", {class:"pill"}, "Question 4 of 4 · Matching"));
     card.appendChild(el("h2", {}, "Match each concept to the best description"));
@@ -568,12 +578,10 @@
   function calculateScore() {
     let score = 0;
 
-    // Q1 correct
     if (state.answers.q1 === "The natural variation in human brains and minds across the population.") {
       score++;
     }
 
-    // Q2 correct set
     const correctMyths = new Set([
       "All neurodivergent students have the same needs.",
       "Neurodiversity is caused by poor parenting.",
@@ -582,35 +590,28 @@
     const chosen = new Set(state.answers.q2 || []);
     const allCorrectChosen = [...correctMyths].every(m => chosen.has(m));
     const noExtra = [...chosen].every(m => correctMyths.has(m));
-    if (allCorrectChosen && noExtra) {
-      score++;
-    }
+    if (allCorrectChosen && noExtra) score++;
 
-    // Q3: incorrect statement is the non-inclusive one
     if (state.answers.q3 === "Only supporting students after they 'fail' to cope with rigid expectations.") {
       score++;
     }
 
-    // Q4: matching
     const q4 = state.answers.q4 || {};
     const c1 = q4.neurodiversity === "Recognising natural brain/mind diversity across humans.";
     const c2 = q4.neurodivergent === "An individual whose brain processes diverge from dominant expectations.";
     const c3 = q4.neuroinclusive === "Designing environments that expect variation and reduce barriers.";
-    if (c1 && c2 && c3) {
-      score++;
-    }
+    if (c1 && c2 && c3) score++;
 
     state.answers.score = score;
-    if (!state.logged) {
-      logCompletion(score);
-    }
+    if (!state.logged) logCompletion(score);
   }
 
-  // --- Google Sheets logging via Apps Script ---
+  // --- Log completion to Google Sheets (Completions tab) ---
   function logCompletion(score) {
-    if (!LOG_ENDPOINT) return; // If you haven't set this, skip logging.
+    if (!LOG_ENDPOINT) return;
 
     const payload = {
+      type: "completion",
       name: state.name,
       email: state.email,
       score: score,
@@ -621,14 +622,12 @@
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
-    }).catch(err => {
-      console.error("Log error", err);
-    });
+    }).catch(err => console.error("Log error", err));
 
     state.logged = true;
   }
 
-  // --- Screen 5: Results ---
+  // --- Screen 5: Results + CTA ---
   function renderResults() {
     const score = state.answers.score || 0;
     const name = state.name || "there";
@@ -650,10 +649,15 @@
     }
     card.appendChild(el("p", {}, msg));
 
-    card.appendChild(el("p", {class:"small-label"},
-      "Schools can connect this mini lesson to a Google Sheet or database"
+    // Qualifying questions – bold & in green, as requested
+    card.appendChild(el("p", {class:"cta"},
+      "Are you an educator needing help designing environments that enable all to thrive?"
+    ));
+    card.appendChild(el("p", {class:"cta"},
+      "Are you a parent or student needing support?"
     ));
 
+    // Share
     const appUrl = encodeURIComponent(window.location.href.split("#")[0]);
     const shareText = encodeURIComponent(
       "I just completed the Neurodiversity in Schools – Fundamentals mini lesson with Neuro Niche. " +
@@ -665,46 +669,158 @@
     card.appendChild(el("a", {
       class:"share-link",
       href: linkedinUrl,
-      target:"_blank",
-      rel:"noopener noreferrer"
+      target: "_blank",
+      rel: "noopener noreferrer"
     }, "Share on LinkedIn"));
 
     const btnRow = el("div", {class:"btn-row"});
-    const restart = el("button", {class:"btn-primary"}, "Restart lesson");
+
+    const contactBtn = el("button", {class:"btn-primary"}, "Contact Neuro Niche");
+    contactBtn.onclick = () => {
+      state.step = 6;
+      render();
+    };
+
+    const restart = el("button", {class:"btn-ghost"}, "Restart lesson");
     restart.onclick = () => {
       state.step = 0;
       state.answers = {};
       state.logged = false;
       render();
     };
+
+    btnRow.appendChild(contactBtn);
     btnRow.appendChild(restart);
     card.appendChild(btnRow);
   }
 
-  // --- HOW TO HOOK UP GOOGLE SHEETS (summary in comments) ---
-  // 1. Create a new Google Sheet (e.g., "Neuro Niche Completions").
-  // 2. Extensions → Apps Script. Replace the default code with:
+  // --- Screen 6: Contact form (logs to ContactRequests tab) ---
+  function renderContact() {
+    card.appendChild(el("div", {class:"pill"}, "Next step"));
+    card.appendChild(el("h2", {}, "How can Neuro Niche support you?"));
+    card.appendChild(el("p", {},
+      "Share a few details and we’ll follow up with resources or a time to connect."
+    ));
+
+    const nameLabel = el("label", {for:"c_name"}, "Name");
+    const nameInput = el("input", {
+      id: "c_name",
+      type: "text",
+      placeholder: "Your name",
+      value: state.name
+    });
+
+    const emailLabel = el("label", {for:"c_email"}, "Email");
+    const emailInput = el("input", {
+      id: "c_email",
+      type: "email",
+      placeholder: "you@school.org",
+      value: state.email
+    });
+
+    const descLabel = el("label", {for:"c_msg"}, "Short description of how Neuro Niche can help you");
+    const descInput = el("textarea", {
+      id: "c_msg",
+      placeholder: "E.g., support with inclusive classroom design, guidance for a specific learner, or community resources."
+    });
+
+    card.appendChild(nameLabel);
+    card.appendChild(nameInput);
+    card.appendChild(emailLabel);
+    card.appendChild(emailInput);
+    card.appendChild(descLabel);
+    card.appendChild(descInput);
+
+    const status = el("div", {class:"status"}, "");
+    card.appendChild(status);
+
+    const btnRow = el("div", {class:"btn-row"});
+
+    const back = el("button", {class:"btn-ghost"}, "Back");
+    back.onclick = () => {
+      state.step = 5;
+      render();
+    };
+
+    const submit = el("button", {class:"btn-primary"}, "Send message");
+    submit.onclick = () => {
+      const n = nameInput.value.trim();
+      const e = emailInput.value.trim();
+      const m = descInput.value.trim();
+
+      if (!n || !e || !m) {
+        status.textContent = "Please fill in all fields before submitting.";
+        status.className = "status warn";
+        return;
+      }
+
+      logContact({ name: n, email: e, message: m });
+
+      status.textContent = "Thank you. Your message has been sent.";
+      status.className = "status ok";
+    };
+
+    btnRow.appendChild(back);
+    btnRow.appendChild(submit);
+    card.appendChild(btnRow);
+  }
+
+  // --- Log contact request (ContactRequests tab) ---
+  function logContact(data) {
+    if (!LOG_ENDPOINT) return;
+
+    const payload = {
+      type: "contact",
+      name: data.name,
+      email: data.email,
+      message: data.message,
+      submitted_at: new Date().toISOString()
+    };
+
+    fetch(LOG_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(err => console.error("Contact log error", err));
+  }
+
+  // --- Apps Script: sample doPost handler ---
+  // In your Apps Script, use this structure so both types log correctly:
   //
-  //    function doPost(e) {
-  //      const ss = SpreadsheetApp.getActiveSpreadsheet();
-  //      const sheet = ss.getSheetByName('Completions') || ss.insertSheet('Completions');
-  //      const data = JSON.parse(e.postData.contents || '{}');
-  //      sheet.appendRow([
-  //        new Date(),
-  //        data.name || '',
-  //        data.email || '',
-  //        data.score || '',
-  //        data.completed_at || ''
-  //      ]);
-  //      return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
-  //    }
+  // function doPost(e) {
+  //   if (!e || !e.postData) {
+  //     return ContentService.createTextOutput('No data').setMimeType(ContentService.MimeType.TEXT);
+  //   }
+  //   const data = JSON.parse(e.postData.contents || '{}');
+  //   const ss = SpreadsheetApp.getActiveSpreadsheet();
+  //   const type = data.type || 'completion';
   //
-  // 3. Deploy → New deployment → type "Web app":
-  //      - Execute as: Me
-  //      - Who has access: Anyone with the link
-  //    Copy the Web app URL.
-  // 4. Paste that URL into the LOG_ENDPOINT constant at the top of this script.
-  // 5. When users finish the quiz, their name/email/score will be logged to the sheet.
+  //   if (type === 'contact') {
+  //     const sheet = ss.getSheetByName('ContactRequests') || ss.insertSheet('ContactRequests');
+  //     sheet.appendRow([
+  //       new Date(),
+  //       data.name || '',
+  //       data.email || '',
+  //       data.message || '',
+  //       data.submitted_at || ''
+  //     ]);
+  //   } else {
+  //     const sheet = ss.getSheetByName('Completions') || ss.insertSheet('Completions');
+  //     sheet.appendRow([
+  //       new Date(),
+  //       data.name || '',
+  //       data.email || '',
+  //       data.score || '',
+  //       data.completed_at || ''
+  //     ]);
+  //   }
+  //
+  //   return ContentService
+  //     .createTextOutput('OK')
+  //     .setMimeType(ContentService.MimeType.TEXT);
+  // }
+  //
+  // Don’t click “Run” on doPost; test by submitting from the live page.
 
   // Initial render
   render();
