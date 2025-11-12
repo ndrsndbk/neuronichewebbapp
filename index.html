@@ -36,8 +36,8 @@
       width:100%;padding:11px 12px;border-radius:var(--radius-lg);
       border:1px solid rgba(15,23,42,.14);font-size:16px;outline:none;background:#fff;font-family:inherit
     }
-    textarea{resize:vertical;min-height:90px}
     input[type="radio"],input[type="checkbox"]{margin-right:8px}
+    textarea{resize:vertical;min-height:90px}
     .options{display:grid;gap:10px;margin-top:6px;font-size:16px}
     .helper{font-size:13px;color:rgba(15,23,42,.6);margin-top:2px}
     .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;font-size:12px;background:rgba(46,125,124,.08);color:var(--teal);margin-bottom:2px}
@@ -79,7 +79,7 @@
 <script>
   // Steps: 0 Intro; 1–4 Questions; 5 Results; 6 Contact
   const QUESTION_STEPS = 4;
-  const LOG_ENDPOINT = ""; // optional: paste your Apps Script /exec URL
+  const LOG_ENDPOINT = ""; // optional: Apps Script /exec URL (with doPost)
 
   let state = { step: 0, name: "", email: "", answers: {}, logged: false };
 
@@ -331,7 +331,7 @@
     if(!state.logged) logCompletion(score);
   }
 
-  // Google Sheets logging (optional, fire-and-forget)
+  // Optional logging (fire-and-forget, no-cors to avoid CORS issues)
   function logCompletion(score){
     if(!LOG_ENDPOINT) return;
     const payload={type:"completion",name:state.name,email:state.email,score,completed_at:new Date().toISOString()};
@@ -344,8 +344,24 @@
     fetch(LOG_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).catch(()=>{});
   }
 
-  // Certificate generator (PNG) — download + open new tab
-  function downloadCertificate(){
+  // Build certificate PNG and OPEN it in a new tab with the image written into the document.
+  function viewCertificate(){
+    const url = buildCertificatePNG();
+    // Open new tab/window and write the image HTML to avoid blank data URLs on iOS
+    const w = window.open("", "_blank");
+    if (w) {
+      w.document.write(`<title>Neuro Niche – Certificate</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>html,body{margin:0;background:#f5f5f5}img{display:block;max-width:100%;height:auto;margin:0 auto}</style>
+        <img alt="Certificate" src="${url}">`);
+      w.document.close();
+    } else {
+      // Fallback: create temporary link
+      const a=document.createElement("a"); a.href=url; a.target="_blank"; a.click();
+    }
+  }
+
+  function buildCertificatePNG(){
     const canvas=document.getElementById("certCanvas");
     const ctx=canvas.getContext("2d");
     const W=canvas.width,H=canvas.height;
@@ -369,18 +385,16 @@
     ctx.font="italic 30px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillStyle="rgba(15,23,42,.75)"; ctx.fillText("“All Brains Belong”",80,760);
     ctx.font="24px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillStyle="rgba(15,23,42,.7)";
     const d=new Date().toLocaleDateString(); ctx.fillText(`Date: ${d}`,80,820); ctx.fillText(`Authorized by: Neuro Niche`,80,860);
-
-    const url=canvas.toDataURL("image/png");
-    const a=document.createElement("a"); a.download=`NeuroNiche_Certificate_${name.replace(/\s+/g,"_")}.png`; a.href=url; a.click();
-    try{ window.open(url,"_blank"); }catch(e){}
+    return canvas.toDataURL("image/png");
   }
   function roundRect(ctx,x,y,w,h,r,fill,stroke){
     if(w<2*r) r=w/2; if(h<2*r) r=h/2;
-    ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+    ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
     if(fill) ctx.fill(); if(stroke) ctx.stroke();
   }
 
-  // 5) Results (download on its own row; restart+contact below)
+  // 5) Results — "View certificate" full width, then restart/contact
   function renderResults(){
     const score=state.answers.score||0;
     const name=state.name||"there";
@@ -396,15 +410,15 @@
     else msg="This is a starting point. Consider revisiting the questions and reflecting with your team.";
     card.appendChild(el("p",{},msg));
 
-    // Bold green CTAs
+    // Bold green prompts
     card.appendChild(el("p",{class:"cta"},"Are you an educator needing help designing environments that enable all to thrive?"));
     card.appendChild(el("p",{class:"cta"},"Are you a parent or student needing support?"));
 
-    // Row 1: Download (solo, full width)
+    // Row 1: View certificate (solo full width)
     const row1=el("div",{class:"btn-row"});
-    const downloadBtn=el("button",{class:"btn-primary"},"Download certificate");
-    downloadBtn.onclick=downloadCertificate;
-    row1.appendChild(downloadBtn);
+    const viewBtn=el("button",{class:"btn-primary"},"View certificate");
+    viewBtn.onclick=viewCertificate;
+    row1.appendChild(viewBtn);
     card.appendChild(row1);
 
     // Row 2: Restart + Contact
@@ -417,7 +431,7 @@
     card.appendChild(row2);
   }
 
-  // 6) Contact (multi-select) + show "Back to site" AFTER submit
+  // 6) Contact (multi-select) + bottom single full-width "Neuro Niche Platform" after submit
   function renderContact(){
     card.appendChild(el("div",{class:"pill"},"Next step"));
     card.appendChild(el("h2",{},"How can Neuro Niche support you?"));
@@ -450,23 +464,24 @@
 
     const status=el("div",{class:"status"},""); card.appendChild(status);
 
-    const btnRow=el("div",{class:"btn-row"});
+    const row=el("div",{class:"btn-row"});
     const back=el("button",{class:"btn-ghost"},"Back"); back.onclick=()=>{state.step=5;render();};
     const submit=el("button",{class:"btn-primary"},"Send");
-    btnRow.appendChild(back); btnRow.appendChild(submit); card.appendChild(btnRow);
+    row.appendChild(back); row.appendChild(submit); card.appendChild(row);
 
-    // Hidden return row; show after successful submit
-    const returnRow=el("div",{class:"btn-row",style:"display:none"});
-    const homeBtn=el("a",{class:"btn-primary",href:"https://neuroniche.pages.dev/",target:"_blank",rel:"noopener"},"Back to Neuro Niche site");
-    returnRow.appendChild(homeBtn);
-    card.appendChild(returnRow);
+    // Bottom single full-width platform button (hidden until success)
+    const bottom=el("div",{class:"btn-row",style:"display:none"});
+    const platformBtn=el("button",{class:"btn-primary"},"Neuro Niche Platform");
+    platformBtn.onclick=()=>{window.location.href="https://neuroniche.pages.dev/";};
+    bottom.appendChild(platformBtn);
+    card.appendChild(bottom);
 
     submit.onclick=()=>{
       const n=nameInput.value.trim(), e=emailInput.value.trim(), s=Array.from(chosen);
       if(!n||!e||s.length===0){status.textContent="Please add your name, email, and at least one service.";status.className="status warn";return;}
       logContact({name:n,email:e,services:s});
       status.textContent="Thank you. Your message has been sent."; status.className="status ok";
-      returnRow.style.display="flex";
+      bottom.style.display="flex"; // reveal bottom full-width button
     };
   }
 
