@@ -5,104 +5,60 @@
   <title>Neuro Niche – Neurodiversity in Schools Fundamentals</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --sage: #DDE6D5;
-      --teal: #2E7D7C;
-      --sand: #F3EEE6;
-      --ink: #0F172A;
-      --radius-xl: 18px;
-      --radius-lg: 12px;
-      --transition-fast: 0.25s ease;
+    :root{
+      --sage:#DDE6D5;--teal:#2E7D7C;--sand:#F3EEE6;--ink:#0F172A;
+      --radius-xl:18px;--radius-lg:12px;--transition-fast:.25s ease
     }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 16px;
-      -webkit-text-size-adjust: 100%;
-      background-color: var(--sand);
-      color: var(--ink);
-      display: flex;
-      justify-content: center;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+      font-size:16px;-webkit-text-size-adjust:100%;
+      background:var(--sand);color:var(--ink);display:flex;justify-content:center
     }
-    .app-shell {
-      width: 100%;
-      max-width: 480px;
-      min-height: 100vh;
-      padding: 16px 16px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .app-shell{width:100%;max-width:480px;min-height:100vh;padding:16px 16px 24px;display:flex;flex-direction:column;gap:12px}
+    header{display:flex;align-items:center;gap:10px}
+    .logo{width:34px;height:34px;border-radius:12px;background:var(--sage);display:flex;align-items:center;justify-content:center;font-size:18px}
+    .brand-title{font-weight:600;font-size:18px}
+    .brand-sub{font-size:12px;color:rgba(15,23,42,.6)}
+    .progress-wrap{margin-top:4px;width:100%;background:rgba(0,0,0,.06);border-radius:999px;height:7px;overflow:hidden}
+    .progress-bar{height:100%;width:0;background:var(--teal);border-radius:999px;transition:width var(--transition-fast)}
+    .card{
+      background:#fff;border-radius:var(--radius-xl);padding:16px 14px 14px;
+      box-shadow:0 8px 24px rgba(15,23,42,.06);display:flex;flex-direction:column;gap:12px;flex:1;margin-top:10px
     }
-    header { display: flex; align-items: center; gap: 10px; }
-    .logo {
-      width: 34px; height: 34px; border-radius: 12px;
-      background-color: var(--sage);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
+    h1,h2{margin:0 0 8px}
+    h1{font-size:22px;line-height:1.25}
+    h2{font-size:20px;line-height:1.3}
+    p{font-size:16px;line-height:1.5;margin:0}
+    label{font-size:16px;display:block;margin-bottom:6px;font-weight:500}
+    input[type="text"],input[type="email"],select,textarea{
+      width:100%;padding:11px 12px;border-radius:var(--radius-lg);
+      border:1px solid rgba(15,23,42,.14);font-size:16px;outline:none;background:#fff;font-family:inherit
     }
-    .brand-title { font-weight: 600; font-size: 18px; }
-    .brand-sub   { font-size: 12px; color: rgba(15,23,42,0.6); }
-
-    .progress-wrap { margin-top: 4px; width: 100%; background: rgba(0,0,0,0.06); border-radius: 999px; height: 7px; overflow: hidden; }
-    .progress-bar  { height: 100%; width: 0%; background: var(--teal); border-radius: 999px; transition: width var(--transition-fast); }
-
-    .card {
-      background-color: #ffffff;
-      border-radius: var(--radius-xl);
-      padding: 16px 14px 14px;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.06);
-      display: flex; flex-direction: column; gap: 12px;
-      flex: 1; margin-top: 10px;
+    textarea{resize:vertical;min-height:90px}
+    input[type="radio"],input[type="checkbox"]{margin-right:8px}
+    .options{display:grid;gap:10px;margin-top:6px;font-size:16px}
+    .helper{font-size:13px;color:rgba(15,23,42,.6);margin-top:2px}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;font-size:12px;background:rgba(46,125,124,.08);color:var(--teal);margin-bottom:2px}
+    .btn-row{display:flex;justify-content:space-between;gap:8px;margin-top:6px}
+    button{
+      border:none;cursor:pointer;padding:12px 16px;border-radius:var(--radius-lg);
+      font-size:16px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      transition:background var(--transition-fast),transform var(--transition-fast),box-shadow var(--transition-fast);
+      -webkit-tap-highlight-color:transparent
     }
-
-    h1, h2 { margin: 0 0 8px; }
-    h1 { font-size: 22px; line-height: 1.25; }
-    h2 { font-size: 20px; line-height: 1.3; }
-    p  { font-size: 16px; line-height: 1.5; margin: 0; }
-    label { font-size: 16px; display: block; margin-bottom: 6px; font-weight: 500; }
-
-    input[type="text"], input[type="email"], select, textarea {
-      width: 100%; padding: 11px 12px; border-radius: var(--radius-lg);
-      border: 1px solid rgba(15,23,42,0.14); font-size: 16px; outline: none; background: #fff; font-family: inherit;
-    }
-    textarea { resize: vertical; min-height: 90px; }
-    input[type="radio"], input[type="checkbox"] { margin-right: 8px; }
-
-    .options { display: grid; gap: 10px; margin-top: 6px; font-size: 16px; }
-    .helper { font-size: 13px; color: rgba(15,23,42,0.6); margin-top: 2px; }
-
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 8px; border-radius: 999px;
-      font-size: 12px; background: rgba(46,125,124,0.08); color: var(--teal);
-      margin-bottom: 2px;
-    }
-
-    .btn-row { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px; }
-    button {
-      border: none; cursor: pointer; padding: 12px 16px;
-      border-radius: var(--radius-lg); font-size: 16px; font-weight: 600;
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-      -webkit-tap-highlight-color: transparent;
-    }
-    .btn-primary { background-color: var(--teal); color: #fff; flex: 1; box-shadow: 0 4px 12px rgba(46,125,124,0.18); }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(46,125,124,0.26); }
-    .btn-ghost   { background: #fff; color: var(--ink); border: 1px solid rgba(15,23,42,0.18); flex-basis: 120px; }
-
-    .status { font-size: 13px; margin-top: 2px; }
-    .status.warn { color: #b45309; }
-    .status.ok   { color: #15803d; }
-
-    .result-score { font-size: 26px; font-weight: 700; margin: 4px 0; }
-    .small-label  { font-size: 13px; color: rgba(15,23,42,0.65); margin-top: 4px; }
-
-    .match-row { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 8px; align-items: center; font-size: 16px; }
-
-    .cta { margin-top: 8px; font-size: 16px; font-weight: 700; color: var(--teal); }
-    .hide { display: none; }
+    .btn-primary{background:var(--teal);color:#fff;flex:1;box-shadow:0 4px 12px rgba(46,125,124,.18)}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(46,125,124,.26)}
+    .btn-ghost{background:#fff;color:var(--ink);border:1px solid rgba(15,23,42,.18);flex:1}
+    .status{font-size:13px;margin-top:2px}
+    .status.warn{color:#b45309}
+    .status.ok{color:#15803d}
+    .result-score{font-size:26px;font-weight:700;margin:4px 0}
+    .small-label{font-size:13px;color:rgba(15,23,42,.65);margin-top:4px}
+    .match-row{display:grid;grid-template-columns:1.2fr 1.8fr;gap:8px;align-items:center;font-size:16px}
+    .cta{margin-top:8px;font-size:16px;font-weight:700;color:var(--teal)}
+    .hide{display:none}
   </style>
 </head>
 <body>
@@ -117,47 +73,44 @@
 
   <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
   <div id="card" class="card"></div>
-  <!-- offscreen canvas for certificate -->
   <canvas id="certCanvas" width="1400" height="990" class="hide" aria-hidden="true"></canvas>
 </div>
 
 <script>
   // Steps: 0 Intro; 1–4 Questions; 5 Results; 6 Contact
   const QUESTION_STEPS = 4;
-  const LOG_ENDPOINT = ""; // paste your Web App /exec URL if using Google Sheets logging
+  const LOG_ENDPOINT = ""; // optional: paste your Apps Script /exec URL
 
   let state = { step: 0, name: "", email: "", answers: {}, logged: false };
 
   const card = document.getElementById("card");
   const progressBar = document.getElementById("progressBar");
 
-  function updateProgress() {
-    if (state.step === 0) progressBar.style.width = "0%";
-    else if (state.step >= 1 && state.step <= QUESTION_STEPS) {
-      progressBar.style.width = (state.step / QUESTION_STEPS) * 100 + "%";
-    } else progressBar.style.width = "100%";
+  function updateProgress(){
+    if(state.step===0) progressBar.style.width="0%";
+    else if(state.step>=1 && state.step<=QUESTION_STEPS) progressBar.style.width=(state.step/QUESTION_STEPS)*100+"%";
+    else progressBar.style.width="100%";
   }
 
-  function el(tag, attrs = {}, children = []) {
-    const node = document.createElement(tag);
-    Object.entries(attrs).forEach(([k, v]) => {
-      if (k === "class") node.className = v;
-      else if (k === "for") node.htmlFor = v;
-      else if (k === "html") node.innerHTML = v;
-      else node.setAttribute(k, v);
+  function el(tag, attrs={}, children=[]){
+    const node=document.createElement(tag);
+    Object.entries(attrs).forEach(([k,v])=>{
+      if(k==="class") node.className=v;
+      else if(k==="for") node.htmlFor=v;
+      else if(k==="html") node.innerHTML=v;
+      else node.setAttribute(k,v);
     });
-    (Array.isArray(children) ? children : [children]).forEach(c => {
-      if (c == null) return;
-      if (typeof c === "string") node.appendChild(document.createTextNode(c));
+    (Array.isArray(children)?children:[children]).forEach(c=>{
+      if(c==null) return;
+      if(typeof c==="string") node.appendChild(document.createTextNode(c));
       else node.appendChild(c);
     });
     return node;
   }
 
-  function render() {
-    card.innerHTML = "";
-    updateProgress();
-    switch (state.step) {
+  function render(){
+    card.innerHTML=""; updateProgress();
+    switch(state.step){
       case 0: return renderIntro();
       case 1: return renderQ1();
       case 2: return renderQ2();
@@ -169,413 +122,354 @@
   }
 
   // 0) Intro
-  function renderIntro() {
-    card.appendChild(el("div", {class:"pill"}, "Mini lesson · ~5 minutes"));
-    card.appendChild(el("h1", {}, "Welcome to the mini lesson"));
-    card.appendChild(el("p", {}, "This short lesson introduces key ideas about neurodiversity and neuro-inclusive practice in schools."));
+  function renderIntro(){
+    card.appendChild(el("div",{class:"pill"},"Mini lesson · ~5 minutes"));
+    card.appendChild(el("h1",{},"Welcome to the mini lesson"));
+    card.appendChild(el("p",{},"This short lesson introduces key ideas about neurodiversity and neuro-inclusive practice in schools."));
 
-    const nameLabel = el("label", {for:"name"}, "Your full name");
-    const nameInput = el("input", {id:"name", type:"text", placeholder:"e.g., Sam Teacher", value: state.name});
-    nameInput.addEventListener("input", e => { state.name = e.target.value; });
+    const nameLabel=el("label",{for:"name"},"Your full name");
+    const nameInput=el("input",{id:"name",type:"text",placeholder:"e.g., Sam Teacher",value:state.name});
+    nameInput.addEventListener("input",e=>{state.name=e.target.value;});
+    const emailLabel=el("label",{for:"email"},"Your email (for certificate / school log)");
+    const emailInput=el("input",{id:"email",type:"email",placeholder:"you@school.org",value:state.email});
+    emailInput.addEventListener("input",e=>{state.email=e.target.value;});
 
-    const emailLabel = el("label", {for:"email"}, "Your email (for certificate / school log)");
-    const emailInput = el("input", {id:"email", type:"email", placeholder:"you@school.org", value: state.email});
-    emailInput.addEventListener("input", e => { state.email = e.target.value; });
+    card.appendChild(nameLabel);card.appendChild(nameInput);
+    card.appendChild(emailLabel);card.appendChild(emailInput);
+    card.appendChild(el("div",{class:"helper"},"Use your school email if you’d like your completion to be recognised."));
 
-    card.appendChild(nameLabel); card.appendChild(nameInput);
-    card.appendChild(emailLabel); card.appendChild(emailInput);
-    card.appendChild(el("div", {class:"helper"}, "Use your school email if you’d like your completion to be recognised."));
+    const status=el("div",{class:"status"},""); card.appendChild(status);
 
-    const status = el("div", {class:"status"}, ""); card.appendChild(status);
-
-    const btnRow = el("div", {class:"btn-row"});
-    const startBtn = el("button", {class:"btn-primary"}, "Start lesson");
-    startBtn.onclick = () => {
-      if (!state.name || !state.email) { status.textContent = "Please enter your name and email to begin."; status.className = "status warn"; return; }
-      status.textContent = ""; state.step = 1; render();
+    const btnRow=el("div",{class:"btn-row"});
+    const startBtn=el("button",{class:"btn-primary"},"Start lesson");
+    startBtn.onclick=()=>{
+      if(!state.name||!state.email){status.textContent="Please enter your name and email to begin.";status.className="status warn";return;}
+      status.textContent=""; state.step=1; render();
     };
     btnRow.appendChild(startBtn); card.appendChild(btnRow);
   }
 
   // 1) MCQ
-  function renderQ1() {
-    card.appendChild(el("div", {class:"pill"}, "Question 1 of 4 · Multiple choice"));
-    card.appendChild(el("h2", {}, "What does neurodiversity mean?"));
-    card.appendChild(el("p", {}, "Choose the most accurate definition."));
+  function renderQ1(){
+    card.appendChild(el("div",{class:"pill"},"Question 1 of 4 · Multiple choice"));
+    card.appendChild(el("h2",{},"What does neurodiversity mean?"));
+    card.appendChild(el("p",{},"Choose the most accurate definition."));
 
-    const opts = [
+    const opts=[
       "A medical disorder affecting a small number of people.",
       "The natural variation in human brains and minds across the population.",
       "A trend about productivity and self-optimization."
     ];
 
-    const wrap = el("div", {class:"options"});
-    const current = state.answers.q1 || "";
-    opts.forEach((opt, i) => {
-      const id = "q1_" + i;
-      const input = el("input", {type:"radio", name:"q1", id, value: opt});
-      if (current === opt) input.checked = true;
-      input.addEventListener("change", () => { state.answers.q1 = opt; });
-      const lbl = el("label", {for:id}, opt);
-      wrap.appendChild(el("div", {}, [input, lbl]));
+    const wrap=el("div",{class:"options"});
+    const current=state.answers.q1||"";
+    opts.forEach((opt,i)=>{
+      const id="q1_"+i;
+      const input=el("input",{type:"radio",name:"q1",id,value:opt});
+      if(current===opt) input.checked=true;
+      input.addEventListener("change",()=>{state.answers.q1=opt;});
+      const lbl=el("label",{for:id},opt);
+      wrap.appendChild(el("div",{},[input,lbl]));
     });
     card.appendChild(wrap);
 
-    const status = el("div", {class:"status"}, ""); card.appendChild(status);
+    const status=el("div",{class:"status"},""); card.appendChild(status);
 
-    const btnRow = el("div", {class:"btn-row"});
-    const back = el("button", {class:"btn-ghost"}, "Back");  back.onclick = () => { state.step = 0; render(); };
-    const next = el("button", {class:"btn-primary"}, "Next");
-    next.onclick = () => {
-      if (!state.answers.q1) { status.textContent = "Please choose an answer."; status.className = "status warn"; return; }
-      state.step = 2; render();
+    const btnRow=el("div",{class:"btn-row"});
+    const back=el("button",{class:"btn-ghost"},"Back"); back.onclick=()=>{state.step=0;render();};
+    const next=el("button",{class:"btn-primary"},"Next");
+    next.onclick=()=>{
+      if(!state.answers.q1){status.textContent="Please choose an answer.";status.className="status warn";return;}
+      state.step=2; render();
     };
     btnRow.appendChild(back); btnRow.appendChild(next); card.appendChild(btnRow);
   }
 
   // 2) Select all
-  function renderQ2() {
-    card.appendChild(el("div", {class:"pill"}, "Question 2 of 4 · Select all that apply"));
-    card.appendChild(el("h2", {}, "Which of the following are stereotypes or myths?"));
-    card.appendChild(el("p", {}, "Tick every statement that reflects a harmful or incorrect assumption."));
+  function renderQ2(){
+    card.appendChild(el("div",{class:"pill"},"Question 2 of 4 · Select all that apply"));
+    card.appendChild(el("h2",{},"Which of the following are stereotypes or myths?"));
+    card.appendChild(el("p",{},"Tick every statement that reflects a harmful or incorrect assumption."));
 
-    const opts = [
+    const opts=[
       "All neurodivergent students have the same needs.",
       "Neurodiversity is caused by poor parenting.",
       "You can reliably 'see' neurodiversity just by looking at someone.",
       "With the right supports and environment, many students can thrive."
     ];
 
-    const selected = new Set(state.answers.q2 || []);
-    const wrap = el("div", {class:"options"});
-    opts.forEach((opt, i) => {
-      const id = "q2_" + i;
-      const input = el("input", {type:"checkbox", id, value: opt});
-      if (selected.has(opt)) input.checked = true;
-      input.addEventListener("change", () => {
-        if (input.checked) selected.add(opt); else selected.delete(opt);
-        state.answers.q2 = Array.from(selected);
-      });
-      const lbl = el("label", {for:id}, opt);
-      wrap.appendChild(el("div", {}, [input, lbl]));
+    const selected=new Set(state.answers.q2||[]);
+    const wrap=el("div",{class:"options"});
+    opts.forEach((opt,i)=>{
+      const id="q2_"+i;
+      const input=el("input",{type:"checkbox",id,value:opt});
+      if(selected.has(opt)) input.checked=true;
+      input.addEventListener("change",()=>{ input.checked?selected.add(opt):selected.delete(opt); state.answers.q2=Array.from(selected);});
+      const lbl=el("label",{for:id},opt);
+      wrap.appendChild(el("div",{},[input,lbl]));
     });
     card.appendChild(wrap);
 
-    card.appendChild(el("div", {class:"helper"}, "Hint: Look for generalisations, blame, or over-simplification."));
+    card.appendChild(el("div",{class:"helper"},"Hint: Look for generalisations, blame, or over-simplification."));
 
-    const status = el("div", {class:"status"}, ""); card.appendChild(status);
+    const status=el("div",{class:"status"},""); card.appendChild(status);
 
-    const btnRow = el("div", {class:"btn-row"});
-    const back = el("button", {class:"btn-ghost"}, "Back"); back.onclick = () => { state.step = 1; render(); };
-    const next = el("button", {class:"btn-primary"}, "Next");
-    next.onclick = () => {
-      const answers = state.answers.q2 || [];
-      if (answers.length === 0) { status.textContent = "Select at least one option."; status.className = "status warn"; return; }
-      state.step = 3; render();
+    const btnRow=el("div",{class:"btn-row"});
+    const back=el("button",{class:"btn-ghost"},"Back"); back.onclick=()=>{state.step=1;render();};
+    const next=el("button",{class:"btn-primary"},"Next");
+    next.onclick=()=>{
+      const answers=state.answers.q2||[];
+      if(answers.length===0){status.textContent="Select at least one option.";status.className="status warn";return;}
+      state.step=3; render();
     };
     btnRow.appendChild(back); btnRow.appendChild(next); card.appendChild(btnRow);
   }
 
   // 3) Select incorrect
-  function renderQ3() {
-    card.appendChild(el("div", {class:"pill"}, "Question 3 of 4 · Select the incorrect answer"));
-    card.appendChild(el("h2", {}, "Which statement does NOT describe neuro-inclusive practice?"));
-    card.appendChild(el("p", {}, "Choose the option that conflicts with a neurodiversity-affirming approach."));
+  function renderQ3(){
+    card.appendChild(el("div",{class:"pill"},"Question 3 of 4 · Select the incorrect answer"));
+    card.appendChild(el("h2",{},"Which statement does NOT describe neuro-inclusive practice?"));
+    card.appendChild(el("p",{},"Choose the option that conflicts with a neurodiversity-affirming approach."));
 
-    const opts = [
+    const opts=[
       "Designing environments so that different sensory and learning profiles can succeed.",
       "Only supporting students after they 'fail' to cope with rigid expectations.",
       "Offering multiple ways to participate, communicate, and show understanding."
     ];
 
-    const current = state.answers.q3 || "";
-    const wrap = el("div", {class:"options"});
-    opts.forEach((opt, i) => {
-      const id = "q3_" + i;
-      const input = el("input", {type:"radio", name:"q3", id, value: opt});
-      if (current === opt) input.checked = true;
-      input.addEventListener("change", () => { state.answers.q3 = opt; });
-      const lbl = el("label", {for:id}, opt);
-      wrap.appendChild(el("div", {}, [input, lbl]));
+    const current=state.answers.q3||"";
+    const wrap=el("div",{class:"options"});
+    opts.forEach((opt,i)=>{
+      const id="q3_"+i;
+      const input=el("input",{type:"radio",name:"q3",id,value:opt});
+      if(current===opt) input.checked=true;
+      input.addEventListener("change",()=>{state.answers.q3=opt;});
+      const lbl=el("label",{for:id},opt);
+      wrap.appendChild(el("div",{},[input,lbl]));
     });
     card.appendChild(wrap);
 
-    const status = el("div", {class:"status"}, ""); card.appendChild(status);
+    const status=el("div",{class:"status"},""); card.appendChild(status);
 
-    const btnRow = el("div", {class:"btn-row"});
-    const back = el("button", {class:"btn-ghost"}, "Back"); back.onclick = () => { state.step = 2; render(); };
-    const next = el("button", {class:"btn-primary"}, "Next");
-    next.onclick = () => {
-      if (!state.answers.q3) { status.textContent = "Please choose one answer."; status.className = "status warn"; return; }
-      state.step = 4; render();
+    const btnRow=el("div",{class:"btn-row"});
+    const back=el("button",{class:"btn-ghost"},"Back"); back.onclick=()=>{state.step=2;render();};
+    const next=el("button",{class:"btn-primary"},"Next");
+    next.onclick=()=>{
+      if(!state.answers.q3){status.textContent="Please choose one answer.";status.className="status warn";return;}
+      state.step=4; render();
     };
     btnRow.appendChild(back); btnRow.appendChild(next); card.appendChild(btnRow);
   }
 
   // 4) Matching
-  function renderQ4() {
-    card.appendChild(el("div", {class:"pill"}, "Question 4 of 4 · Matching"));
-    card.appendChild(el("h2", {}, "Match each concept to the best description"));
-    card.appendChild(el("p", {}, "Use the dropdowns to connect the idea with the most accurate phrase."));
+  function renderQ4(){
+    card.appendChild(el("div",{class:"pill"},"Question 4 of 4 · Matching"));
+    card.appendChild(el("h2",{},"Match each concept to the best description"));
+    card.appendChild(el("p",{},"Use the dropdowns to connect the idea with the most accurate phrase."));
 
-    const options = [
+    const options=[
       "Recognising natural brain/mind diversity across humans.",
       "An individual whose brain processes diverge from dominant expectations.",
       "Designing environments that expect variation and reduce barriers."
     ];
 
-    const current = state.answers.q4 || {};
-    const rows = [
-      { key: "neurodiversity", label: "Neurodiversity" },
-      { key: "neurodivergent", label: "Neurodivergent" },
-      { key: "neuroinclusive", label: "Neuro-inclusive practice" }
+    const current=state.answers.q4||{};
+    const rows=[
+      {key:"neurodiversity",label:"Neurodiversity"},
+      {key:"neurodivergent",label:"Neurodivergent"},
+      {key:"neuroinclusive",label:"Neuro-inclusive practice"}
     ];
 
-    rows.forEach(row => {
-      const sel = el("select", {});
-      sel.appendChild(el("option", {value:""}, "-- Select a description --"));
-      options.forEach(opt => {
-        const o = el("option", {value:opt}, opt);
-        if (current[row.key] === opt) o.selected = true;
+    rows.forEach(row=>{
+      const sel=el("select",{});
+      sel.appendChild(el("option",{value:""},"-- Select a description --"));
+      options.forEach(opt=>{
+        const o=el("option",{value:opt},opt);
+        if(current[row.key]===opt) o.selected=true;
         sel.appendChild(o);
       });
-      sel.addEventListener("change", e => {
-        if (!state.answers.q4) state.answers.q4 = {};
-        state.answers.q4[row.key] = e.target.value;
+      sel.addEventListener("change",e=>{
+        if(!state.answers.q4) state.answers.q4={};
+        state.answers.q4[row.key]=e.target.value;
       });
-
-      card.appendChild(el("div", {class:"match-row"}, [ el("div", {}, row.label), sel ]));
+      card.appendChild(el("div",{class:"match-row"},[el("div",{},row.label),sel]));
     });
 
-    const status = el("div", {class:"status"}, ""); card.appendChild(status);
+    const status=el("div",{class:"status"},""); card.appendChild(status);
 
-    const btnRow = el("div", {class:"btn-row"});
-    const back   = el("button", {class:"btn-ghost"}, "Back"); back.onclick = () => { state.step = 3; render(); };
-    const finish = el("button", {class:"btn-primary"}, "See my results");
-    finish.onclick = () => {
-      const q4 = state.answers.q4 || {};
-      if (!q4.neurodiversity || !q4.neurodivergent || !q4.neuroinclusive) {
-        status.textContent = "Please complete all three matches."; status.className = "status warn"; return;
+    const btnRow=el("div",{class:"btn-row"});
+    const back=el("button",{class:"btn-ghost"},"Back"); back.onclick=()=>{state.step=3;render();};
+    const finish=el("button",{class:"btn-primary"},"See my results");
+    finish.onclick=()=>{
+      const q4=state.answers.q4||{};
+      if(!q4.neurodiversity||!q4.neurodivergent||!q4.neuroinclusive){
+        status.textContent="Please complete all three matches."; status.className="status warn"; return;
       }
-      calculateScore(); state.step = 5; render();
+      calculateScore(); state.step=5; render();
     };
     btnRow.appendChild(back); btnRow.appendChild(finish); card.appendChild(btnRow);
   }
 
-  function calculateScore() {
-    let score = 0;
-    if (state.answers.q1 === "The natural variation in human brains and minds across the population.") score++;
-
-    const correctMyths = new Set([
+  function calculateScore(){
+    let score=0;
+    if(state.answers.q1==="The natural variation in human brains and minds across the population.") score++;
+    const correctMyths=new Set([
       "All neurodivergent students have the same needs.",
       "Neurodiversity is caused by poor parenting.",
       "You can reliably 'see' neurodiversity just by looking at someone."
     ]);
-    const chosen = new Set(state.answers.q2 || []);
-    if ([...correctMyths].every(m => chosen.has(m)) && [...chosen].every(m => correctMyths.has(m))) score++;
-
-    if (state.answers.q3 === "Only supporting students after they 'fail' to cope with rigid expectations.") score++;
-
-    const q4 = state.answers.q4 || {};
-    const c1 = q4.neurodiversity === "Recognising natural brain/mind diversity across humans.";
-    const c2 = q4.neurodivergent === "An individual whose brain processes diverge from dominant expectations.";
-    const c3 = q4.neuroinclusive === "Designing environments that expect variation and reduce barriers.";
-    if (c1 && c2 && c3) score++;
-
-    state.answers.score = score;
-    if (!state.logged) logCompletion(score);
+    const chosen=new Set(state.answers.q2||[]);
+    if([...correctMyths].every(m=>chosen.has(m)) && [...chosen].every(m=>correctMyths.has(m))) score++;
+    if(state.answers.q3==="Only supporting students after they 'fail' to cope with rigid expectations.") score++;
+    const q4=state.answers.q4||{};
+    if(
+      q4.neurodiversity==="Recognising natural brain/mind diversity across humans." &&
+      q4.neurodivergent==="An individual whose brain processes diverge from dominant expectations." &&
+      q4.neuroinclusive==="Designing environments that expect variation and reduce barriers."
+    ) score++;
+    state.answers.score=score;
+    if(!state.logged) logCompletion(score);
   }
 
-  // Google Sheets logging (fire-and-forget; no-cors to avoid CORS errors)
-  function logCompletion(score) {
-    if (!LOG_ENDPOINT) return;
-    const payload = { type: "completion", name: state.name, email: state.email, score, completed_at: new Date().toISOString() };
-    fetch(LOG_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }).catch(()=>{});
-    state.logged = true;
+  // Google Sheets logging (optional, fire-and-forget)
+  function logCompletion(score){
+    if(!LOG_ENDPOINT) return;
+    const payload={type:"completion",name:state.name,email:state.email,score,completed_at:new Date().toISOString()};
+    fetch(LOG_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).catch(()=>{});
+    state.logged=true;
   }
-  function logContact(data) {
-    if (!LOG_ENDPOINT) return;
-    const payload = { type: "contact", ...data, submitted_at: new Date().toISOString() };
-    fetch(LOG_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) }).catch(()=>{});
-  }
-
-  // Certificate generator (PNG)
-  function downloadCertificate() {
-    const canvas = document.getElementById("certCanvas");
-    const ctx = canvas.getContext("2d");
-    const W = canvas.width, H = canvas.height;
-
-    // Reset
-    ctx.clearRect(0, 0, W, H);
-
-    // Background
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, W, H);
-
-    // Border
-    ctx.strokeStyle = "#DDE6D5";
-    ctx.lineWidth = 16;
-    ctx.strokeRect(24, 24, W - 48, H - 48);
-
-    // Header strip
-    ctx.fillStyle = "#F3EEE6";
-    ctx.fillRect(24, 120, W - 48, 120);
-
-    // Logo mark (rounded square + brain emoji)
-    ctx.fillStyle = "#DDE6D5";
-    roundRect(ctx, 80, 80, 90, 90, 20, true, false);
-    ctx.font = "54px Apple Color Emoji, Segoe UI Emoji";
-    ctx.fillText("🧠", 100, 146);
-
-    // Title
-    ctx.fillStyle = "#0F172A";
-    ctx.font = "bold 56px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillText("Neuro Niche", 190, 150);
-
-    ctx.font = "24px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillStyle = "rgba(15,23,42,0.7)";
-    ctx.fillText("Certificate of Completion", 190, 190);
-
-    // Body text
-    const name = state.name || "Participant";
-    const score = (state.answers.score ?? 0) + " / 4";
-    ctx.fillStyle = "#0F172A";
-    ctx.font = "42px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillText(`This certifies that`, 80, 330);
-
-    ctx.font = "bold 60px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillStyle = "#2E7D7C";
-    ctx.fillText(name, 80, 400);
-
-    ctx.fillStyle = "#0F172A";
-    ctx.font = "36px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillText(`has completed the lesson quiz`, 80, 460);
-
-    ctx.font = "32px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillText(`Neurodiversity in Schools — Fundamentals`, 80, 510);
-
-    ctx.font = "bold 40px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillStyle = "#2E7D7C";
-    ctx.fillText(`Score: ${score}`, 80, 580);
-
-    // Footer quote
-    ctx.font = "italic 30px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillStyle = "rgba(15,23,42,0.75)";
-    ctx.fillText("“All Brains Belong”", 80, 760);
-
-    // Date / signature line
-    ctx.font = "24px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-    ctx.fillStyle = "rgba(15,23,42,0.7)";
-    const d = new Date().toLocaleDateString();
-    ctx.fillText(`Date: ${d}`, 80, 820);
-    ctx.fillText(`Authorized by: Neuro Niche`, 80, 860);
-
-    // Download
-    const link = document.createElement("a");
-    link.download = `NeuroNiche_Certificate_${name.replace(/\s+/g,'_')}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+  function logContact(data){
+    if(!LOG_ENDPOINT) return;
+    const payload={type:"contact",...data,submitted_at:new Date().toISOString()};
+    fetch(LOG_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).catch(()=>{});
   }
 
-  function roundRect(ctx, x, y, w, h, r, fill, stroke) {
-    if (w < 2 * r) r = w / 2;
-    if (h < 2 * r) r = h / 2;
-    ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    ctx.arcTo(x + w, y, x + w, y + h, r);
-    ctx.arcTo(x + w, y + h, x, y + h, r);
-    ctx.arcTo(x, y + h, x, y, r);
-    ctx.arcTo(x, y, x + w, y, r);
-    ctx.closePath();
-    if (fill) ctx.fill();
-    if (stroke) ctx.stroke();
+  // Certificate generator (PNG) — download + open new tab
+  function downloadCertificate(){
+    const canvas=document.getElementById("certCanvas");
+    const ctx=canvas.getContext("2d");
+    const W=canvas.width,H=canvas.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle="#FFFFFF"; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle="#DDE6D5"; ctx.lineWidth=16; ctx.strokeRect(24,24,W-48,H-48);
+    ctx.fillStyle="#F3EEE6"; ctx.fillRect(24,120,W-48,120);
+    ctx.fillStyle="#DDE6D5"; roundRect(ctx,80,80,90,90,20,true,false);
+    ctx.font="54px Apple Color Emoji, Segoe UI Emoji"; ctx.fillText("🧠",100,146);
+    ctx.fillStyle="#0F172A";
+    ctx.font="bold 56px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillText("Neuro Niche",190,150);
+    ctx.font="24px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillStyle="rgba(15,23,42,.7)"; ctx.fillText("Certificate of Completion",190,190);
+
+    const name=state.name||"Participant";
+    const score=(state.answers.score??0)+" / 4";
+    ctx.fillStyle="#0F172A"; ctx.font="42px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillText("This certifies that",80,330);
+    ctx.font="bold 60px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillStyle="#2E7D7C"; ctx.fillText(name,80,400);
+    ctx.fillStyle="#0F172A"; ctx.font="36px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillText("has completed the lesson quiz",80,460);
+    ctx.font="32px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillText("Neurodiversity in Schools — Fundamentals",80,510);
+    ctx.font="bold 40px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillStyle="#2E7D7C"; ctx.fillText(`Score: ${score}`,80,580);
+    ctx.font="italic 30px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillStyle="rgba(15,23,42,.75)"; ctx.fillText("“All Brains Belong”",80,760);
+    ctx.font="24px system-ui,-apple-system,Segoe UI,Roboto,sans-serif"; ctx.fillStyle="rgba(15,23,42,.7)";
+    const d=new Date().toLocaleDateString(); ctx.fillText(`Date: ${d}`,80,820); ctx.fillText(`Authorized by: Neuro Niche`,80,860);
+
+    const url=canvas.toDataURL("image/png");
+    const a=document.createElement("a"); a.download=`NeuroNiche_Certificate_${name.replace(/\s+/g,"_")}.png`; a.href=url; a.click();
+    try{ window.open(url,"_blank"); }catch(e){}
+  }
+  function roundRect(ctx,x,y,w,h,r,fill,stroke){
+    if(w<2*r) r=w/2; if(h<2*r) r=h/2;
+    ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+    if(fill) ctx.fill(); if(stroke) ctx.stroke();
   }
 
-  // 5) Results + CTA + Download certificate
-  function renderResults() {
-    const score = state.answers.score || 0;
-    const name = state.name || "there";
+  // 5) Results (download on its own row; restart+contact below)
+  function renderResults(){
+    const score=state.answers.score||0;
+    const name=state.name||"there";
 
-    card.appendChild(el("div", {class:"pill"}, "Completed"));
-    card.appendChild(el("h2", {}, `Well done, ${name}!`));
-    card.appendChild(el("p", {}, "You’ve completed the Neurodiversity in Schools — Fundamentals quiz."));
-    card.appendChild(el("div", {class:"result-score"}, `${score} / 4`));
+    card.appendChild(el("div",{class:"pill"},"Completed"));
+    card.appendChild(el("h2",{},`Well done, ${name}!`));
+    card.appendChild(el("p",{},"You’ve completed the Neurodiversity in Schools — Fundamentals quiz."));
+    card.appendChild(el("div",{class:"result-score"},`${score} / 4`));
 
     let msg;
-    if (score === 4) msg = "You’re demonstrating a strong, affirming understanding of core concepts.";
-    else if (score === 3) msg = "Great foundations. A quick revisit of any missed items will deepen your confidence.";
-    else msg = "This is a starting point. Consider revisiting the questions and reflecting with your team.";
-    card.appendChild(el("p", {}, msg));
+    if(score===4) msg="You’re demonstrating a strong, affirming understanding of core concepts.";
+    else if(score===3) msg="Great foundations. A quick revisit of any missed items will deepen your confidence.";
+    else msg="This is a starting point. Consider revisiting the questions and reflecting with your team.";
+    card.appendChild(el("p",{},msg));
 
     // Bold green CTAs
-    card.appendChild(el("p", {class:"cta"}, "Are you an educator needing help designing environments that enable all to thrive?"));
-    card.appendChild(el("p", {class:"cta"}, "Are you a parent or student needing support?"));
+    card.appendChild(el("p",{class:"cta"},"Are you an educator needing help designing environments that enable all to thrive?"));
+    card.appendChild(el("p",{class:"cta"},"Are you a parent or student needing support?"));
 
-    const btnRow = el("div", {class:"btn-row"});
-    const downloadBtn = el("button", {class:"btn-primary"}, "Download certificate");
-    downloadBtn.onclick = downloadCertificate;
+    // Row 1: Download (solo, full width)
+    const row1=el("div",{class:"btn-row"});
+    const downloadBtn=el("button",{class:"btn-primary"},"Download certificate");
+    downloadBtn.onclick=downloadCertificate;
+    row1.appendChild(downloadBtn);
+    card.appendChild(row1);
 
-    const contactBtn = el("button", {class:"btn-ghost"}, "Contact Neuro Niche");
-    contactBtn.onclick = () => { state.step = 6; render(); };
-
-    btnRow.appendChild(downloadBtn);
-    btnRow.appendChild(contactBtn);
-    card.appendChild(btnRow);
-
-    const restartRow = el("div", {class:"btn-row"});
-    const restart = el("button", {class:"btn-ghost"}, "Restart lesson");
-    restart.onclick = () => { state.step = 0; state.answers = {}; state.logged = false; render(); };
-    restartRow.appendChild(restart);
-    card.appendChild(restartRow);
+    // Row 2: Restart + Contact
+    const row2=el("div",{class:"btn-row"});
+    const restart=el("button",{class:"btn-ghost"},"Restart lesson");
+    restart.onclick=()=>{state.step=0;state.answers={};state.logged=false;render();};
+    const contactBtn=el("button",{class:"btn-ghost"},"Contact Neuro Niche");
+    contactBtn.onclick=()=>{state.step=6;render();};
+    row2.appendChild(restart); row2.appendChild(contactBtn);
+    card.appendChild(row2);
   }
 
-  // 6) Contact form (multi-select services)
-  function renderContact() {
-    card.appendChild(el("div", {class:"pill"}, "Next step"));
-    card.appendChild(el("h2", {}, "How can Neuro Niche support you?"));
-    card.appendChild(el("p", {}, "Select all services that apply and we’ll follow up with resources or a time to connect."));
+  // 6) Contact (multi-select) + show "Back to site" AFTER submit
+  function renderContact(){
+    card.appendChild(el("div",{class:"pill"},"Next step"));
+    card.appendChild(el("h2",{},"How can Neuro Niche support you?"));
+    card.appendChild(el("p",{},"Select all services that apply and we’ll follow up with resources or a time to connect."));
 
-    const nameLabel = el("label", {for:"c_name"}, "Name");
-    const nameInput = el("input", {id:"c_name", type:"text", placeholder:"Your name", value: state.name});
+    const nameLabel=el("label",{for:"c_name"},"Name");
+    const nameInput=el("input",{id:"c_name",type:"text",placeholder:"Your name",value:state.name});
+    const emailLabel=el("label",{for:"c_email"},"Email");
+    const emailInput=el("input",{id:"c_email",type:"email",placeholder:"you@school.org",value:state.email});
 
-    const emailLabel = el("label", {for:"c_email"}, "Email");
-    const emailInput = el("input", {id:"c_email", type:"email", placeholder:"you@school.org", value: state.email});
-
-    const servicesLabel = el("label", {}, "Which service are you most interested in? (Select all that apply)");
-    const opts = [
+    const servicesLabel=el("label",{},"Which service are you most interested in? (Select all that apply)");
+    const opts=[
       "Organisational Support (training, workshops, capacity-building)",
       "Individual (family support, coaching, therapeutic services, personal support)",
       "Support Groups (Young adults, special interests, executive functioning, family & caregivers)"
     ];
-    const chosen = new Set();
-    const list = el("div", {class:"options"});
-    opts.forEach((opt, i) => {
-      const id = "svc_" + i;
-      const cb = el("input", {type:"checkbox", id, value: opt});
-      cb.addEventListener("change", () => { cb.checked ? chosen.add(opt) : chosen.delete(opt); });
-      const lbl = el("label", {for:id}, opt);
-      list.appendChild(el("div", {}, [cb, lbl]));
+    const chosen=new Set();
+    const list=el("div",{class:"options"});
+    opts.forEach((opt,i)=>{
+      const id="svc_"+i;
+      const cb=el("input",{type:"checkbox",id,value:opt});
+      cb.addEventListener("change",()=>{cb.checked?chosen.add(opt):chosen.delete(opt);});
+      const lbl=el("label",{for:id},opt);
+      list.appendChild(el("div",{},[cb,lbl]));
     });
 
-    card.appendChild(nameLabel);  card.appendChild(nameInput);
+    card.appendChild(nameLabel); card.appendChild(nameInput);
     card.appendChild(emailLabel); card.appendChild(emailInput);
     card.appendChild(servicesLabel); card.appendChild(list);
 
-    const status = el("div", {class:"status"}, ""); card.appendChild(status);
+    const status=el("div",{class:"status"},""); card.appendChild(status);
 
-    const btnRow = el("div", {class:"btn-row"});
-    const back   = el("button", {class:"btn-ghost"}, "Back"); back.onclick = () => { state.step = 5; render(); };
-    const submit = el("button", {class:"btn-primary"}, "Send");
-    submit.onclick = () => {
-      const n = nameInput.value.trim(), e = emailInput.value.trim(), s = Array.from(chosen);
-      if (!n || !e || s.length === 0) { status.textContent = "Please add your name, email, and at least one service."; status.className = "status warn"; return; }
-      logContact({ name: n, email: e, services: s });
-      status.textContent = "Thank you. Your message has been sent."; status.className = "status ok";
-    };
+    const btnRow=el("div",{class:"btn-row"});
+    const back=el("button",{class:"btn-ghost"},"Back"); back.onclick=()=>{state.step=5;render();};
+    const submit=el("button",{class:"btn-primary"},"Send");
     btnRow.appendChild(back); btnRow.appendChild(submit); card.appendChild(btnRow);
+
+    // Hidden return row; show after successful submit
+    const returnRow=el("div",{class:"btn-row",style:"display:none"});
+    const homeBtn=el("a",{class:"btn-primary",href:"https://neuroniche.pages.dev/",target:"_blank",rel:"noopener"},"Back to Neuro Niche site");
+    returnRow.appendChild(homeBtn);
+    card.appendChild(returnRow);
+
+    submit.onclick=()=>{
+      const n=nameInput.value.trim(), e=emailInput.value.trim(), s=Array.from(chosen);
+      if(!n||!e||s.length===0){status.textContent="Please add your name, email, and at least one service.";status.className="status warn";return;}
+      logContact({name:n,email:e,services:s});
+      status.textContent="Thank you. Your message has been sent."; status.className="status ok";
+      returnRow.style.display="flex";
+    };
   }
 
-  // Kickoff
   render();
 </script>
 </body>
